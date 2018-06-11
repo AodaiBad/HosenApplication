@@ -88,4 +88,12 @@
         android:layout_alignEnd="@+id/textView"
         android:text="Register" />
 
+    <Button
+        android:id="@+id/btnmanager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSignUp"
+        android:layout_alignStart="@+id/btnSignUp"
+        android:text="Button" />
+
 </RelativeLayout>

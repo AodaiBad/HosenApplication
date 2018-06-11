@@ -94,6 +94,41 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        final String[] a = {"DELETE"};
+        final Queue q = (Queue) parent.getItemAtPosition(position);
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Delete");
+        builder.setCancelable(true);
+        builder.setSingleChoiceItems(a, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(MainActivity.this, a[i], Toast.LENGTH_SHORT).show();
+                if (i == 0) {
+                    DatabaseReference reference;
+                    //todo לקבלת קישור למסד הנתונים שלנו
+                    //todo  קישור הינו לשורש של המסד הנתונים
+
+                    reference = FirebaseDatabase.getInstance().getReference();
+                    reference.child("mylist").child(q.getKeyId()).removeValue(new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                            if (databaseError == null) {
+                                Toast.makeText(MainActivity.this, "delete successful", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MainActivity.this, "delete failed", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            }
+
+
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
 
     }
 }

@@ -21,6 +21,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     private EditText etPass;
     private Button btnLogin;
     private Button btnSignUp;
+    private Button btnmanager;
     private FirebaseAuth auth;
     private FirebaseUser firebaseUser;
 
@@ -33,8 +34,10 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         etPass = (EditText) findViewById(R.id.etPass);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnSignUp = (Button)findViewById(R.id.btnSignUp);
+        btnmanager = (Button)findViewById(R.id.btnmanager);
         btnSignUp.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
+        btnmanager.setOnClickListener(this);
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
 
@@ -71,6 +74,11 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         if (view== btnSignUp){
             Intent intent = new Intent(this,RegisterActivity.class);
             startActivity(intent);
+        }
+
+        if (view==btnmanager){
+            Intent intent2 = new Intent(this,ListOfQueues.class);
+            startActivity(intent2);
         }
     }
 }

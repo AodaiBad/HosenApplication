@@ -35,6 +35,7 @@ public class QueueAdapter extends ArrayAdapter<Queue> {
         TextView tvName = (TextView) view.findViewById(R.id.tvName);
         TextView tvAddress = (TextView) view.findViewById(R.id.tvAddress);
         TextView tvPhone = (TextView) view.findViewById(R.id.tvPhone);
+        final ImageButton btnDel = (ImageButton) view.findViewById(R.id.btnDel);
 
 
         final Queue h = getItem(position);
@@ -45,8 +46,64 @@ public class QueueAdapter extends ArrayAdapter<Queue> {
         tvPhone.setText(h.getPhone() + "");
         tvAddress.setText(h.getAddress() + "");
 
+        btnDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v==btnDel)
+                {
+                    del(h);
+                }
+            }
+        });
+
+
         return view;
 
 
     }
+
+    private void del ( final Queue q)
+    {
+
+        final String[] a = {"DELETE"};
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Delete");
+        builder.setCancelable(true);
+        builder.setSingleChoiceItems(a, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialogInterface, int i) {
+
+                dialogInterface.dismiss();
+                Toast.makeText(getContext(), a[i], Toast.LENGTH_SHORT).show();
+                if (i == 0) {
+                    DatabaseReference reference;
+                    //todo לקבלת קישור למסד הנתונים שלנו
+                    //todo  קישור הינו לשורש של המסד הנתונים
+
+                    reference = FirebaseDatabase.getInstance().getReference();
+                    reference.child("mylist").child(q.getKeyId()).removeValue(new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                            if (databaseError == null) {
+                                Toast.makeText(getContext(), "delete successful", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Toast.makeText(getContext(), "delete failed", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            }
+
+
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
+
+
 }

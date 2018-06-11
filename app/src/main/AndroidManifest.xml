@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".AddQueueActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ListOfQueues"></activity>
     </application>
 
 </manifest>
